@@ -19,6 +19,14 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/node@master
+      env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    - name: ZAP Scan
+      uses: zaproxy/action-full-scan@v0.13.0
+      with:
+        target: 'https://the-internet.herokuapp.com/upload?utm_source=chatgpt.com'
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:

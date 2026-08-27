@@ -216,6 +216,7 @@ test('test API patch', async ({ request }) => {
 })
 test('test API delete', async ({ request }) => {
     const response = await request.delete('https://dummyjson.com/products/1');
+    
     const body = await response.json();
-    console.log(body);
+    
 })
