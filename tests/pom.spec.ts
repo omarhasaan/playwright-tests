@@ -3,7 +3,7 @@ import loginpage from "./LoginPage/loginpage";
 import ProductPage from "./LoginPage/productpage";
 import * as testdata from "../testdata/testdata.json";
 
-test("pom test",async({page})=>{
+test("pom",async({page})=>{
 
     const loginpageelements= new loginpage(page);;
     const productpageelemnts=new ProductPage(page);

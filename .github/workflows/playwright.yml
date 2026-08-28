@@ -1,9 +1,36 @@
 name: Playwright Tests
 on:
   push:
-    branches: [ main, master ]
+    branches: [master ]
   pull_request:
     branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      run-testcases:
+        description: 'add your npx code'
+        required: false
+        default: "npm run run-testcases"
+        type: string
+      workers:
+        description: 'number of workers'
+        required: false
+        default: "4"
+        type: choice
+        options:
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+      browsers:
+        description: 'type of browser'
+        required: false
+        default: "chromium"
+        type: choice
+        options:
+          - 'firefox'
+          - 'chromium'
+          - 'webkit'
+          - 'all'
 jobs:
   test:
     timeout-minutes: 60
@@ -18,7 +45,14 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test
+      env:
+        run-testcases: ${{ inputs.run-testcases || 'npm run run-testcases'}}
+        workers: ${{inputs.workers || '1'}}
+        browsers: ${{inputs.browsers || 'chromium'}}
+      run: 
+        ${{env.run-testcases}} --worker=${{env.workers}} --browser=${{env.browsers}}
+        
+
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/node@master
       env:

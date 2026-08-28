@@ -1,5 +1,4 @@
 import BasePage from "../pages/basepages";
-import basepages from "../pages/basepages";
 
 
 export default class ProductPage extends BasePage{
