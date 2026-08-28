@@ -58,7 +58,7 @@ jobs:
 
 
   zap:
-    needs: snyk
+    needs: playwright-tests
     runs-on: ubuntu-latest
 
     steps:
@@ -69,7 +69,7 @@ jobs:
 
 
   report:
-    needs: zap
+    needs: playwright-tests
     runs-on: ubuntu-latest
 
     steps:
