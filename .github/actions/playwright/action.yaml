@@ -1,0 +1,20 @@
+name: Setup Playwright browsers
+description: "Cache and install Playwright browsers"
+runs:
+  using: composite
+  steps:
+    - name: Cache Playwright browsers
+      id: playwright-cache
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: ${{ runner.os }}-playwright-browsers-${{ hashFiles('package-lock.json') }}
+
+    - name: Install Playwright system dependencies
+      shell: bash
+      run: npx playwright install-deps
+
+    - name: Install Playwright browsers
+      if: steps.playwright-cache.outputs.cache-hit != 'true'
+      shell: bash
+      run: npx playwright install
